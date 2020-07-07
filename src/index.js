@@ -5,8 +5,9 @@ import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache, ApolloLink, split
 import {BrowserRouter as Router,} from "react-router-dom"
 import {getMainDefinition} from '@apollo/client/utilities'
 import {WebSocketLink} from '@apollo/link-ws'
+require('dotenv').config()
 
-const httpLink = new HttpLink({uri: 'http://localhost:4000'})
+const httpLink = new HttpLink({uri: process.env.REACT_APP_API_LINK})
 const authLink = new ApolloLink((operation, forward) => {
     const user = JSON.parse(localStorage.getItem('libraryUser'));
     if (!user) return forward(operation)
@@ -19,7 +20,7 @@ const authLink = new ApolloLink((operation, forward) => {
     return forward(operation);
 });
 const wsLink = new WebSocketLink({
-    uri: `ws://localhost:4000/graphql`,
+    uri: process.env.REACT_APP_WEBSOCKET_LINK,
     options: {
         reconnect: true
     }

@@ -9,8 +9,6 @@ import Logout from "./components/login/Logout";
 import {Route, Switch} from "react-router-dom"
 import './App.css'
 import Recommended from "./components/books/Recommended";
-import {useApolloClient, useSubscription} from "@apollo/client";
-import {ALL_BOOKS, BOOK_ADDED} from "./queries";
 
 const App = () => {
     const [message, setMessage] = useState(null)
