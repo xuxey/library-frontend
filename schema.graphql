@@ -1,0 +1,61 @@
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on FIELD_DEFINITION | OBJECT | INTERFACE
+# Exposes a URL that specifies the behaviour of this scalar.
+directive @specifiedBy(
+  # The URL that specifies the behaviour of this scalar.
+  url: String!
+) on SCALAR
+type Author {
+  name: String!
+  _id: ID!
+  born: Int
+  bookCount: Int
+}
+
+type Book {
+  title: String!
+  published: Int!
+  author: Author!
+  _id: ID!
+  genres: [String!]!
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type Mutation {
+  addBook(
+    title: String!
+    author: String!
+    published: Int!
+    genres: [String!]!
+  ): Book
+  editAuthor(name: String!, setBornTo: Int!): Author
+  createUser(username: String!, password: String!, favoriteGenre: String!): User
+  login(username: String!, password: String!): User
+}
+
+type Query {
+  bookCount: Int!
+  authorCount: Int!
+  allBooks(author: String, genre: String): [Book!]!
+  allAuthors: [Author!]!
+  me: User
+}
+
+type Subscription {
+  bookAdded: Book!
+}
+
+type User {
+  username: String!
+  favoriteGenre: String!
+  password: String!
+  id: ID!
+  token: String
+}
+

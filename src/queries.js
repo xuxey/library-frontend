@@ -47,18 +47,3 @@ export const FAVE_GENRE = gql`
         }
     }
 `
-
-export const BOOK_ADDED = gql`
-    subscription {
-        bookAdded {
-            title
-            published
-            author {
-                name
-                _id
-            }
-            _id
-            genres
-        }
-    }
-`

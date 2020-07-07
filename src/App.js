@@ -47,7 +47,7 @@ const App = () => {
                 <Route path="/books">
                     <h2>Books</h2>
                     <hr/>
-                    <Books showMessage={showMessage}/>
+                    <Books/>
                 </Route>
                 <Route path="/logout">
                     <h2>Log Out</h2>
@@ -62,7 +62,7 @@ const App = () => {
                 <Route path="/">
                     <h2>Books</h2>
                     <hr/>
-                    <Books showMessage={showMessage}/>
+                    <Books/>
                 </Route>
             </Switch>
         </div>

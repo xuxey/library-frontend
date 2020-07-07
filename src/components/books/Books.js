@@ -1,31 +1,12 @@
 import React, {useState} from 'react'
-import {useQuery, useApolloClient, useSubscription} from "@apollo/client";
-import {ALL_BOOKS, BOOK_ADDED} from "../../queries";
+import {useQuery} from "@apollo/client";
+import {ALL_BOOKS} from "../../queries";
 import {Form, InputGroup, Table} from "react-bootstrap";
 
-const Books = ({showMessage}) => {
+const Books = () => {
     const {loading, error, data} = useQuery(ALL_BOOKS)
     const [search, setSearch] = useState('')
     const [genreFilter, setGenreFilter] = useState('Any Genre')
-    const client = useApolloClient()
-    const updateCacheWith = (addedBook) => {
-        const includedIn = (set, object) => set.map(book => book._id).includes(object._id)
-        const dataInStore = client.readQuery({query: ALL_BOOKS})
-        if (!dataInStore) return
-        if (!includedIn(dataInStore.allBooks, addedBook)) {
-            client.writeQuery({
-                query: ALL_BOOKS,
-                data: {allBooks: dataInStore.allBooks.concat(addedBook)}
-            })
-        }
-    }
-    useSubscription(BOOK_ADDED, {
-        onSubscriptionData: ({subscriptionData}) => {
-            const addedBook = subscriptionData.data.bookAdded
-            showMessage(`New book: ${addedBook.title}`, false)
-            updateCacheWith(addedBook)
-        }
-    })
     if (loading) return <div>loading...</div>
     if (error) {
         console.log(error)
