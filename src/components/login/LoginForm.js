@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useMutation} from "@apollo/client";
 import {LOGIN_USER} from "../../mutations";
-import {Button, Form} from "react-bootstrap";
+import {Button, Col, Form} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 
 const LoginForm = ({setUser, setMessage}) => {
@@ -29,11 +29,16 @@ const LoginForm = ({setUser, setMessage}) => {
     }
     return (
         <Form onSubmit={onSubmit}>
-            <h3> Login </h3>
-            <Form.Label>Username</Form.Label>
-            <Form.Control id='username' value={username} onChange={e => setUsername(e.target.value)}/>
-            <Form.Label>Password</Form.Label>
-            <Form.Control id='password' value={password} onChange={e => setPassword(e.target.value)} type='password'/>
+            <Form.Row>
+                <Form.Group as={Col}>
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control id='username' value={username} onChange={e => setUsername(e.target.value)}/>
+                </Form.Group>
+                <Form.Group as={Col}>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control id='password' value={password} onChange={e => setPassword(e.target.value)} type='password'/>
+                </Form.Group>
+            </Form.Row>
             <Button variant="primary" id="login-button" type="submit">Login</Button>
         </Form>
     )

@@ -8,8 +8,8 @@ const Logout = ({setUser, showMessage}) => {
     window.localStorage.removeItem('libraryUser')
     setUser(null)
     client.resetStore()
-        .then(r => showMessage('Logged out of your account', false))
-    history.push('/')
+        .then(() => showMessage('Logged out of your account', false))
+    history.push('/books')
     return <div>Logging out...</div>
 }
 export default Logout

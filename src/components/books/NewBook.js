@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {ADD_BOOK} from "../../mutations";
 import {useMutation} from "@apollo/client";
 import {ALL_AUTHORS, ALL_BOOKS} from "../../queries";
-import {Button, Form, Col} from "react-bootstrap";
+import {Button, Form, Col, InputGroup} from "react-bootstrap";
 
 const NewBook = (props) => {
     const [title, setTitle] = useState('')
@@ -72,16 +72,18 @@ const NewBook = (props) => {
                   />
               </Form.Group>
           </Form.Row>
-          <Form inline>
-              <Form.Group>
+          <InputGroup>
                   <Form.Control
                       placeholder="Add genres"
                       value={genre}
                       onChange={({target}) => setGenre(target.value)}
                   />
-                  <Button variant='primary' onClick={addGenre} type="button">+</Button>
-              </Form.Group>
-          </Form>
+                  <InputGroup.Append>
+                      <Button variant='primary' onClick={addGenre} type="button">+</Button>
+                  </InputGroup.Append>
+
+          </InputGroup>
+
 
           <div>
               <span><h4> Genres:  </h4></span>

@@ -1,12 +1,13 @@
 import {gql} from "@apollo/client"
 
 export const ADD_BOOK = gql`
-    mutation createBook($title: String!, $author: String!, $genres: [String!]!, $published: Int!) {
+    mutation createBook($title: String!, $author: String!, $genres: [String!]!, $published: Int!, $price: Int!) {
         addBook(
             author: $author,
             title: $title,
             genres: $genres,
-            published: $published
+            published: $published,
+            price: $price
         ) {
             title
             author {
@@ -28,12 +29,18 @@ export const SET_BDAY = gql`
 `
 
 export const REGISTER_USER = gql`
-    mutation registerUser($username: String!, $password: String!, $favoriteGenre: String!) {
-        createUser(favoriteGenre: $favoriteGenre, username: $username, password: $password) {
+    mutation registerUser(
+        $username: String!
+        $password: String!
+        $apartmentWing: String!
+        $apartmentNumber: Int!
+        $phoneNumber: String!) {
+        register(username: $username, password: $password,
+            apartmentWing: $apartmentWing, apartmentNumber: $apartmentNumber,
+            phoneNumber: $phoneNumber) {
             username
-            id
-            favoriteGenre
             token
+            id
         }
     }
 `
@@ -43,7 +50,6 @@ export const LOGIN_USER = gql`
             username
             id
             token
-            favoriteGenre
         }
     }
 `

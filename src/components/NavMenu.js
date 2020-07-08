@@ -26,11 +26,12 @@ const NavMenu = ({user}) => {
     else
         return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
-                <Navbar.Brand href="/">Books</Navbar.Brand>
+                <Navbar.Brand href="/">Library</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="#" as="span"><Link style={padding} to='/login'>Login</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={padding} to='/register'>Register</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

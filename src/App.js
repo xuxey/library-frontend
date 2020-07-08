@@ -6,9 +6,10 @@ import Notification from "./components/Notification";
 import LoginForm from "./components/login/LoginForm";
 import NavMenu from "./components/NavMenu";
 import Logout from "./components/login/Logout";
-import {Route, Switch} from "react-router-dom"
+import {Redirect, Route, Switch} from "react-router-dom"
 import './App.css'
 import Recommended from "./components/books/Recommended";
+import RegisterForm from "./components/login/RegisterForm";
 
 const App = () => {
     const [message, setMessage] = useState(null)
@@ -30,7 +31,10 @@ const App = () => {
                 <Route path="/login">
                     <h2>Login</h2>
                     <hr/>
-                    <LoginForm setMessage={showMessage} setUser={setUser}/>
+                    {
+                        user ? <Redirect to="/books"/> :
+                        <LoginForm setMessage={showMessage} setUser={setUser}/>
+                    }
                 </Route>
                 <Route path="/authors">
                     <h2>Authors</h2>
@@ -59,10 +63,18 @@ const App = () => {
                     <hr/>
                     <Recommended user={user}/>
                 </Route>
+                <Route path="/register">
+                    <h2>Register</h2>
+                    <hr/>
+                    {user?
+                        <Redirect to="/books"/> :
+                        <RegisterForm setUser={setUser} setMessage={showMessage}/>
+                    }
+                </Route>
                 <Route path="/">
                     <h2>Books</h2>
                     <hr/>
-                    <Books/>
+                    <Redirect to="/books"/>
                 </Route>
             </Switch>
         </div>
