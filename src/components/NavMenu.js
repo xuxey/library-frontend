@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 import {Nav, Navbar} from 'react-bootstrap'
 
 const NavMenu = ({user}) => {
-    const padding = {
+    const navStyle = {
         paddingRight: 5
     }
     if (user)
@@ -13,12 +13,17 @@ const NavMenu = ({user}) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#" as="span"><Link style={padding} to="/books">Home</Link></Nav.Link>
-                        <Nav.Link href="#" as="span"><Link style={padding} to="/books/new">Add Book</Link></Nav.Link>
-                        <Nav.Link href="#" as="span"><Link style={padding} to="/authors">Authors</Link></Nav.Link>
-                        <Nav.Link href="#" as="span"><Link style={padding}
+                        <Nav.Link href="#" as="span"><Link style={navStyle} to="/books">Home</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={navStyle} to="/authors">Authors</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={navStyle}
                                                            to='/recommended'>Recommended</Link></Nav.Link>
-                        <Nav.Link href="#" as="span"><Link style={padding} to='/logout'>Logout</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={navStyle} to='/logout'>Logout</Link></Nav.Link>
+                        {
+                            (user.username==='admin') ?
+                            <Nav.Link href="#" as="span"><Link style={navStyle} to="/books/new">Add Book</Link></Nav.Link> :
+                            null
+                        }
+
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -30,8 +35,9 @@ const NavMenu = ({user}) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#" as="span"><Link style={padding} to='/login'>Login</Link></Nav.Link>
-                        <Nav.Link href="#" as="span"><Link style={padding} to='/register'>Register</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={navStyle} to="/authors">Authors</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={navStyle} to='/login'>Login</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={navStyle} to='/register'>Register</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

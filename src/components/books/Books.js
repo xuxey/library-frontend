@@ -50,7 +50,6 @@ const Books = () => {
                     <th>Book</th>
                     <th>Author</th>
                     <th>Genres</th>
-                    <th>Published</th>
                 </tr>
                 {books.map(books =>
                     <tr key={books.title}>
@@ -58,7 +57,6 @@ const Books = () => {
                         <td>{books.title}</td>
                         <td>{books.author.name}</td>
                         <td>{books.genres.join(', ')}</td>
-                        <td>{books.published}</td>
                     </tr>
                 )}
                 </tbody>

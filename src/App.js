@@ -41,6 +41,7 @@ const App = () => {
                     <hr/>
                     <Authors
                         setMessage={showMessage}
+                        user={user}
                     />
                 </Route>
                 <Route path="/books/new">

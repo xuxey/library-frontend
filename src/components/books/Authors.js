@@ -4,7 +4,7 @@ import {ALL_AUTHORS} from "../../queries";
 import SetBirthYear from "./SetBirthYear";
 import {Table} from "react-bootstrap";
 
-const Authors = ({setMessage}) => {
+const Authors = ({setMessage, user}) => {
     const {loading, error, data} = useQuery(ALL_AUTHORS)
     if (loading) return <div>loading authors...</div>
     if (error) {
@@ -30,7 +30,13 @@ const Authors = ({setMessage}) => {
                 )}
                 </tbody>
             </Table>
-            <SetBirthYear authors={authors} setMessage={setMessage}/>
+            {
+                user &&
+                (user.username==='admin') ?
+                    <SetBirthYear authors={authors} setMessage={setMessage}/> :
+                    null
+            }
+
       </div>
   )
 }

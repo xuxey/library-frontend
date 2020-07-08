@@ -7,7 +7,7 @@ import {Button, Form, Col, InputGroup} from "react-bootstrap";
 const NewBook = (props) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
-    const [published, setPublished] = useState('')
+    const [price, setPrice] = useState('')
     const [genre, setGenre] = useState('')
     const [genres, setGenres] = useState([])
     const [createBook] = useMutation(ADD_BOOK, {
@@ -24,12 +24,12 @@ const NewBook = (props) => {
 
     const submit = async (event) => {
         event.preventDefault()
-        const pub = Number(published)
-        await createBook({variables: {title, author, published: pub, genres}})
+        const numPrice = Number(price)
+        await createBook({variables: {title, author, price: numPrice, genres}})
         console.log('add book...')
 
         setTitle('')
-        setPublished('')
+        setPrice('')
         setAuthor('')
     setGenres([])
     setGenre('')
@@ -63,33 +63,37 @@ const NewBook = (props) => {
               </Form.Group>
 
               <Form.Group as={Col}>
-                  <Form.Label>Published</Form.Label>
+                  <Form.Label>Price</Form.Label>
                   <Form.Control
                       placeholder="Year"
                       type='number'
-                      value={published}
-                      onChange={({target}) => setPublished(target.value)}
+                      value={price}
+                      onChange={({target}) => setPrice(target.value)}
                   />
               </Form.Group>
           </Form.Row>
-          <InputGroup>
-                  <Form.Control
-                      placeholder="Add genres"
-                      value={genre}
-                      onChange={({target}) => setGenre(target.value)}
-                  />
-                  <InputGroup.Append>
-                      <Button variant='primary' onClick={addGenre} type="button">+</Button>
-                  </InputGroup.Append>
-
-          </InputGroup>
-
-
+          <Form.Row>
+              <Col sm={4}>
+                  <Form.Group>
+                      <Form.Label>
+                          Genres
+                      </Form.Label>
+                      <InputGroup>
+                          <Form.Control
+                              placeholder="Add genres"
+                              value={genre}
+                              onChange={({target}) => setGenre(target.value)}
+                          />
+                          <InputGroup.Append>
+                              <Button variant='primary' onClick={addGenre} type="button">+</Button>
+                          </InputGroup.Append>
+                      </InputGroup>
+                  </Form.Group>
+              </Col>
+          </Form.Row>
           <div>
               <span><h4> Genres:  </h4></span>
               <span>{genres.join(',')}</span>
-
-
           </div>
           <Button type='submit'>Create Book</Button>
       </Form>

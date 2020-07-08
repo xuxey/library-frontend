@@ -24,8 +24,8 @@ const LoginForm = ({setUser, setMessage}) => {
         window.localStorage.setItem('libraryUser', JSON.stringify(loggedInUser))
         setUsername('')
         setPassword('')
-        history.push('/books')
         setMessage(`Logged in as ${username}`, false)
+        history.push('/books')
     }
     return (
         <Form onSubmit={onSubmit}>

@@ -19,7 +19,7 @@ export const ALL_BOOKS = gql`
                 name
                 _id
             }
-            published
+            price
             genres
             _id
         }
@@ -34,16 +34,8 @@ export const BOOKS_BY_GENRE = gql`
                 name
                 _id
             }
-            published
+            price
             genres
-        }
-    }
-`
-
-export const FAVE_GENRE = gql`
-    query getFavoriteGenre {
-        me {
-            favoriteGenre
         }
     }
 `
