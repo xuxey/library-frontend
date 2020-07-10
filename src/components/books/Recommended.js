@@ -40,7 +40,7 @@ const Recommended = ({user}) => {
                     <tr key={books.title}>
                         <td>{i++}</td>
                         <td>{books.title}</td>
-                        <td>{books.author.name}</td>
+                        <td>{books.author}</td>
                         <td>{books.genres.join(', ')}</td>
                     </tr>
                 )}

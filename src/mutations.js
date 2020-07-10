@@ -9,23 +9,13 @@ export const ADD_BOOK = gql`
             price: $price
         ) {
             title
-            author {
-                name
-                _id
-            }
+            author 
             genres
             price
         }
     }
 `
-export const SET_BDAY = gql`
-    mutation setBday($name: String!, $setBornTo: Int!) {
-        editAuthor(name: $name, setBornTo: $setBornTo) {
-            name
-            born
-        }
-    }
-`
+
 
 export const REGISTER_USER = gql`
     mutation registerUser(
@@ -57,3 +47,16 @@ export const DELETE_BOOK = gql`
         deleteBook(id: $id)
     }
 `
+/*export const UPDATE_USER = gql`
+    mutation updateUser(
+        $apartmentWing: String!
+        $apartmentNumber: Int!
+        $phoneNumber: String!) {
+        updateUser(apartmentWing: $apartmentWing, apartmentNumber: $apartmentNumber,
+            phoneNumber: $phoneNumber) {
+            username
+            token
+            id
+        }
+    }
+`*/

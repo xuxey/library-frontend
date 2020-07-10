@@ -66,3 +66,7 @@ hr {
     -moz-appearance: none;
     appearance: none;
 }
+.form-control:disabled, .form-control[readonly] {
+    background-color: #333333;
+    opacity: 0.5;
+}

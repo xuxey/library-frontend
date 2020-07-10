@@ -20,7 +20,7 @@ const Books = () => {
     })
     genres = ['Any Genre', ...new Set(genres)];
     books = books.filter(book => book.title.toLowerCase().includes(search.toLowerCase()) ||
-                                book.author.name.toLowerCase().includes(search.toLowerCase()))
+                                book.author.toLowerCase().includes(search.toLowerCase()))
     if (genreFilter !== 'Any Genre')
         books = books.filter(book => book.genres.includes(genreFilter))
     let i = 1
@@ -58,7 +58,7 @@ const Books = () => {
                     <tr key={book.title} onClick={()=>history.push(`/books/${book._id}`)}>
                         <td>{i++}</td>
                         <td>{book.title}</td>
-                        <td>{book.author.name}</td>
+                        <td>{book.author}</td>
                         <td>{book.genres.join(', ')}</td>
                         <td>{book.borrower?<Badge pill variant="secondary">
                             Taken

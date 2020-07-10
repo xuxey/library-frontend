@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useParams, useHistory} from "react-router-dom"
 import {useMutation, useQuery} from "@apollo/client";
-import {ALL_AUTHORS, ALL_BOOKS, BOOK_BY_ID} from "../../queries";
+import {ALL_BOOKS, BOOK_BY_ID} from "../../queries";
 import axios from "axios"
 import {Button, ButtonGroup, Col, Image, Row} from "react-bootstrap";
 import {DELETE_BOOK} from "../../mutations";
@@ -12,7 +12,7 @@ const BookView = ({user, showMessage}) => {
     const [description, setDescription] = useState('')
     const [thumbnail, setThumbnail] = useState('')
     const [deleteBookById] = useMutation(DELETE_BOOK, {
-        refetchQueries: [{query: ALL_AUTHORS}, {query: ALL_BOOKS}],
+        refetchQueries: [{query: ALL_BOOKS}],
         onError: error => {
             console.log(error)
             showMessage(error.graphQLErrors[0].message, true)
@@ -38,7 +38,7 @@ const BookView = ({user, showMessage}) => {
     }
     useEffect(()=>{
         if(!data) return
-        const searchTerm = data.bookById.title.replace(' ','+')+'+'+data.bookById.author.name.replace(' ','+')
+        const searchTerm = data.bookById.title.replace(' ','+')+'+'+data.bookById.author.replace(' ','+')
         axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`)
             .then(res => {
                 if(res && res.data.items.length>0) {
@@ -63,7 +63,7 @@ const BookView = ({user, showMessage}) => {
         <div>
             <Row>
                 <Col>
-                    <h3>{book.title} by {book.author.name}</h3>
+                    <h3>{book.title} by {book.author}</h3>
                 </Col>
                 <Col>
                     <ButtonGroup className="float-right">

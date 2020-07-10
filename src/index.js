@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache, ApolloLink, split} from '@apollo/client'
+import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache, ApolloLink} from '@apollo/client'
 import {BrowserRouter as Router,} from "react-router-dom"
 require('dotenv').config()
 

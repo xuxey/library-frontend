@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import Authors from './components/books/Authors'
 import Books from './components/books/Books'
 import NewBook from './components/books/NewBook'
 import Notification from "./components/Notification";
@@ -8,10 +7,10 @@ import NavMenu from "./components/NavMenu";
 import Logout from "./components/login/Logout";
 import {Redirect, Route, Switch} from "react-router-dom"
 import './App.css'
-import Recommended from "./components/books/Recommended";
 import RegisterForm from "./components/login/RegisterForm";
 import BookView from "./components/books/BookView";
 import {Container} from "react-bootstrap";
+import UserDashboard from "./components/UserDashboard";
 
 const App = () => {
     const [message, setMessage] = useState(null)
@@ -38,14 +37,6 @@ const App = () => {
                         <LoginForm setMessage={showMessage} setUser={setUser}/>
                     }
                 </Route>
-                <Route path="/authors">
-                    <h2>Authors</h2>
-                    <hr/>
-                    <Authors
-                        setMessage={showMessage}
-                        user={user}
-                    />
-                </Route>
                 <Route path="/books/new">
                     <h2>Add New Book</h2>
                     <hr/>
@@ -58,6 +49,16 @@ const App = () => {
                     <h2>Books</h2>
                     <hr/>
                     <Books/>
+                </Route>
+                <Route path="/dashboard">
+                    {
+                        user ? <>
+                            <h2>Dashboard - {user.username}</h2>
+                            <hr/>
+                            <UserDashboard/>
+                            </>:
+                        <Redirect to="/books"/>
+                    }
                 </Route>
                 <Route path="/logout">
                     <h2>Log Out</h2>

@@ -2,23 +2,12 @@ directive @cacheControl(
   maxAge: Int
   scope: CacheControlScope
 ) on FIELD_DEFINITION | OBJECT | INTERFACE
-# Exposes a URL that specifies the behaviour of this scalar.
-directive @specifiedBy(
-  # The URL that specifies the behaviour of this scalar.
-  url: String!
-) on SCALAR
-type Author {
-  name: String!
-  _id: ID!
-  born: Int
-  bookCount: Int
-}
-
+directive @specifiedBy(url: String!) on SCALAR
 type Book {
   price: Int!
   title: String!
   borrower: User
-  author: Author!
+  author: String!
   _id: ID!
   genres: [String!]!
 }
@@ -36,7 +25,6 @@ type Mutation {
     genres: [String!]!
   ): Book
   deleteBook(id: String!): String
-  editAuthor(name: String!, setBornTo: Int!): Author
   login(username: String!, password: String!): User
   register(
     username: String!
@@ -45,20 +33,26 @@ type Mutation {
     apartmentNumber: Int!
     phoneNumber: String!
   ): User
+  changePassword(
+    username: String!
+    currentPassword: String!
+    newPassword: String!
+  ): String
+  reserveBook(id: String!): Book
 }
 
 type Query {
   bookCount: Int!
-  authorCount: Int!
   bookById(id: String): Book
   allBooks(author: String, genre: String): [Book!]!
-  allAuthors: [Author!]!
   me: User
 }
 
 type Subscription {
   bookAdded: Book!
 }
+
+scalar Upload
 
 type User {
   phoneNumber: String!
