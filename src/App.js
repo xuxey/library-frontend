@@ -64,11 +64,11 @@ const App = () => {
                     <hr/>
                     <Logout setUser={setUser} showMessage={showMessage}/>
                 </Route>
-                <Route path="/recommended">
+                {/*<Route path="/recommended">
                     <h2>Recommended</h2>
                     <hr/>
                     <Recommended user={user}/>
-                </Route>
+                </Route>*/}
                 <Route path="/register">
                     <h2>Register</h2>
                     <hr/>

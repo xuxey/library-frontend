@@ -14,7 +14,6 @@ const Books = () => {
         return <div>Error</div>
     }
     let books = data.allBooks
-    console.log(books)
     let genres = []
     books.forEach(book => {
         genres = genres.concat(book.genres)

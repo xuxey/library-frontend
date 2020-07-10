@@ -8,7 +8,7 @@ const Authors = ({setMessage, user}) => {
     if (loading) return <div>loading authors...</div>
     if (error) {
         console.log(error)
-        return <div>An error has occured</div>
+        return <div>An error has occurred</div>
     }
     const authors = data.allAuthors
     return (

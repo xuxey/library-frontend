@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom"
-import {Nav, Navbar} from 'react-bootstrap'
+import {Image, Nav, Navbar} from 'react-bootstrap'
 
 const NavMenu = ({user}) => {
     const navStyle = {
@@ -9,14 +9,20 @@ const NavMenu = ({user}) => {
     if (user)
         return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
-                <Navbar.Brand href="/">Books</Navbar.Brand>
+                <Navbar.Brand href="/books">
+                    <Image width="30"
+                           height="30"
+                           className="d-inline-block align-top"
+                           src="/favicon.png"/>
+                    Library
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="#" as="span"><Link style={navStyle} to="/books">Home</Link></Nav.Link>
                         <Nav.Link href="#" as="span"><Link style={navStyle} to="/authors">Authors</Link></Nav.Link>
-                        <Nav.Link href="#" as="span"><Link style={navStyle}
-                                                           to='/recommended'>Recommended</Link></Nav.Link>
+                        {/*<Nav.Link href="#" as="span"><Link style={navStyle}
+                                                           to='/recommended'>Recommended</Link></Nav.Link>*/}
                         <Nav.Link href="#" as="span"><Link style={navStyle} to='/logout'>Logout</Link></Nav.Link>
                         {
                             (user.username==='admin') ?
