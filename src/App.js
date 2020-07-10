@@ -10,6 +10,8 @@ import {Redirect, Route, Switch} from "react-router-dom"
 import './App.css'
 import Recommended from "./components/books/Recommended";
 import RegisterForm from "./components/login/RegisterForm";
+import BookView from "./components/books/BookView";
+import {Container} from "react-bootstrap";
 
 const App = () => {
     const [message, setMessage] = useState(null)
@@ -24,7 +26,7 @@ const App = () => {
         setTimeout(() => setMessage(null), 5000)
     }
     return (
-        <div className="container">
+        <Container>
             <NavMenu user={user}/>
             <Notification message={message}/>
             <Switch>
@@ -48,6 +50,9 @@ const App = () => {
                     <h2>Add New Book</h2>
                     <hr/>
                     <NewBook showMessage={showMessage} user={user}/>
+                </Route>
+                <Route path="/books/:id">
+                    <BookView user={user} showMessage={showMessage}/>
                 </Route>
                 <Route path="/books">
                     <h2>Books</h2>
@@ -78,7 +83,7 @@ const App = () => {
                     <Redirect to="/books"/>
                 </Route>
             </Switch>
-        </div>
+        </Container>
     )
 }
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import {useQuery} from "@apollo/client";
 import {ALL_AUTHORS} from "../../queries";
-import SetBirthYear from "./SetBirthYear";
 import {Table} from "react-bootstrap";
 
 const Authors = ({setMessage, user}) => {
@@ -30,13 +29,6 @@ const Authors = ({setMessage, user}) => {
                 )}
                 </tbody>
             </Table>
-            {
-                user &&
-                (user.username==='admin') ?
-                    <SetBirthYear authors={authors} setMessage={setMessage}/> :
-                    null
-            }
-
       </div>
   )
 }

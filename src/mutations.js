@@ -52,3 +52,8 @@ export const LOGIN_USER = gql`
         }
     }
 `
+export const DELETE_BOOK = gql`
+    mutation removeBook($id: String!) {
+        deleteBook(id: $id)
+    }
+`

@@ -21,6 +21,9 @@ export const ALL_BOOKS = gql`
             }
             price
             genres
+            borrower {
+                username
+            }
             _id
         }
     }
@@ -36,6 +39,25 @@ export const BOOKS_BY_GENRE = gql`
             }
             price
             genres
+            borrower {
+                username
+            }
         }
     }
 `
+
+export const BOOK_BY_ID = gql`
+    query getBook($id: String){
+        bookById(id: $id){
+            title
+            author {
+                name
+                _id
+            }
+            genres
+            _id
+            borrower {
+                username
+            }
+        }
+    }`
