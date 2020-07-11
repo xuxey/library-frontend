@@ -18,6 +18,10 @@ const LoginForm = ({setUser, setMessage}) => {
         if (password === '') return
         const user = {username, password}
         let loggedInUser = await loginUser({variables: user})
+        if(!loggedInUser || !loggedInUser.data || !loggedInUser.data.login) {
+            setMessage('Username or password incorrect', true)
+            return
+        }
         loggedInUser = loggedInUser.data.login
         console.log("LOGGED IN USER", loggedInUser)
         setUser(loggedInUser)

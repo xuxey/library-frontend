@@ -47,6 +47,28 @@ export const DELETE_BOOK = gql`
         deleteBook(id: $id)
     }
 `
+
+export const RESERVE_BOOK = gql`
+    mutation reserveBook($id:String!) {
+        reserveBook(id:$id) {
+            title
+            borrower {
+                username
+            }
+        }
+    }
+`
+
+export const SET_AVAILABLE = gql`
+    mutation setBookAvailable($id: String!) {
+        setAvailable(id: $id) {
+            title
+            borrower {
+                username
+            }
+        }
+    }
+`
 /*export const UPDATE_USER = gql`
     mutation updateUser(
         $apartmentWing: String!

@@ -15,14 +15,17 @@ import UserDashboard from "./components/UserDashboard";
 const App = () => {
     const [message, setMessage] = useState(null)
     const [user, setUser] = useState(null)
+    const [timeoutId, setTimeoutId] = useState(null)
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('libraryUser')
         if (loggedUserJSON)
             setUser(JSON.parse(loggedUserJSON))
     }, [])
     const showMessage = (message, isError) => {
+        if(timeoutId) clearTimeout(timeoutId)
         setMessage({text: message, error: isError})
-        setTimeout(() => setMessage(null), 5000)
+        const id = setTimeout(() => setMessage(null), 5000)
+        setTimeoutId(id)
     }
     return (
         <Container>

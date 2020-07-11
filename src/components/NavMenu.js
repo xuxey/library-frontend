@@ -23,14 +23,21 @@ const NavMenu = ({user}) => {
                         {/*<Nav.Link href="#" as="span"><Link style={navStyle}
                                                            to='/recommended'>Recommended</Link></Nav.Link>*/}
                         <Nav.Link href="#" as="span"><Link style={navStyle} to="/dashboard">Dashboard</Link></Nav.Link>
-                        <Nav.Link href="#" as="span"><Link style={navStyle} to='/logout'>Logout</Link></Nav.Link>
                         {
                             (user.username==='admin') ?
                             <Nav.Link href="#" as="span"><Link style={navStyle} to="/books/new">Add Book</Link></Nav.Link> :
                             null
                         }
-
                     </Nav>
+                </Navbar.Collapse>
+                <Navbar.Collapse className="justify-content-end">
+                    {   user&& <>
+                        <Navbar.Text>
+                            Signed in as: <a href="/dashboard">{user.username}</a>
+                        </Navbar.Text>
+                        <Nav.Link href="#" as="span" ><Link style={navStyle} to='/logout'>Logout</Link></Nav.Link>
+                    </>
+                    }
                 </Navbar.Collapse>
             </Navbar>
         )
@@ -45,8 +52,8 @@ const NavMenu = ({user}) => {
                     ShareBooks
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
+                <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+                    <Nav className="justify-content-end">
                         <Nav.Link href="#" as="span"><Link style={navStyle} to='/login'>Login</Link></Nav.Link>
                         <Nav.Link href="#" as="span"><Link style={navStyle} to='/register'>Register</Link></Nav.Link>
                     </Nav>

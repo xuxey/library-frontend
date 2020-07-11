@@ -28,6 +28,14 @@ const RegisterForm = ({setUser, setMessage}) => {
             setMessage('Select your apartment wing', true)
             return
         }
+        if(phone==='' || flatNumber==='' ) {
+            setMessage('Fill out the missing fields', true)
+            return
+        }
+        if(username.length<3 || password.length <5) {
+            setMessage('You need a longer username/password', true)
+            return
+        }
         let loggedInUser = await registerUser({variables: {
                 username,
                 password,

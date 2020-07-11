@@ -39,13 +39,14 @@ type Mutation {
     newPassword: String!
   ): String
   reserveBook(id: String!): Book
+  setAvailable(id: String!): Book
 }
 
 type Query {
   bookCount: Int!
   bookById(id: String): Book
   allBooks(author: String, genre: String): [Book!]!
-  me: User
+  me: User!
 }
 
 type Subscription {
@@ -61,6 +62,7 @@ type User {
   username: String!
   password: String!
   borrowedBooks: [Book!]!
+  wishlist: [Book!]!
   id: ID!
   token: String
 }

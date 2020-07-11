@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {useMutation, useQuery} from "@apollo/client";
-import {SELF_MEMBER} from "../queries";
+import {SELF_USER} from "../queries";
 import Form from "react-bootstrap/Form";
 import {Button, Col, InputGroup} from "react-bootstrap";
 import {UPDATE_USER} from "../mutations";
 
 const UserDashboard = () => {
-    const {loading, data, error} = useQuery(SELF_MEMBER)
+    const {loading, data, error} = useQuery(SELF_USER)
     const [wing, setWing] = useState('Select')
     const [flatNumber, setFlatNumber] = useState('')
     const [phone, setPhone] = useState('')
-    const [readOnlyMode, setReadOnlyMode] = useState(true)
     const wingOptions = ['Select', 'A', 'B', 'C', 'D', 'E', 'F', 'N/A']
     useEffect(()=>{
         if(loading) return
@@ -64,7 +63,6 @@ const UserDashboard = () => {
                         <InputGroup.Prepend>
                             <Form.Control
                                 value={wing}
-                                readOnly={readOnlyMode}
                                 as="select" custom onChange={e => {
                                 e.preventDefault();
                                 setWing(e.target.value)
@@ -73,8 +71,7 @@ const UserDashboard = () => {
                             </Form.Control>
                         </InputGroup.Prepend>
                         <Form.Control id='flat-number' type="number" value={flatNumber}
-                                      placeholder="Apartment Number" onChange={e => setFlatNumber(e.target.value)}
-                                      readOnly={readOnlyMode}/>
+                                      placeholder="Apartment Number" onChange={e => setFlatNumber(e.target.value)}/>
                     </InputGroup>
                     <InputGroup as={Col} lg={true}>
                         <InputGroup.Prepend>
@@ -83,12 +80,12 @@ const UserDashboard = () => {
                         <InputGroup.Prepend>
                             <InputGroup.Text>+91</InputGroup.Text>
                         </InputGroup.Prepend>
-                        <Form.Control id='phone' value={phone} onChange={e => setPhone(e.target.value)} readOnly={readOnlyMode}/>
+                        <Form.Control id='phone' value={phone} onChange={e => setPhone(e.target.value)}/>
                     </InputGroup>
                 </Form.Row>
                 <Form.Row style={{paddingTop: 10}}>
                     <Col>
-                        <Button variant="primary" id="register-button" type="submit">Update</Button>
+                        <Button variant="primary" id="update-button" type="submit">Update</Button>
                     </Col>
                 </Form.Row>
             </Form>

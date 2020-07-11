@@ -43,7 +43,7 @@ export const BOOK_BY_ID = gql`
         }
     }`
 
-export const SELF_MEMBER = gql`
+export const SELF_USER = gql`
     query {
         me{
             phoneNumber
