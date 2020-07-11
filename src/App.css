@@ -12,10 +12,9 @@ html, body {
 
 @media (max-width: 979px) {
     body {
-        padding-top: 40px;
+        padding-top: 65px;
     }
 }
-
 hr {
     background-color: #555;
 }
