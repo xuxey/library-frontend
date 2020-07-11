@@ -50,6 +50,15 @@ export const SELF_USER = gql`
             apartmentWing
             apartmentNumber
             username
+            wishlist {
+                title
+                author
+                borrower {
+                    username
+                }
+                genres
+                _id
+            }
             borrowedBooks{
                 title
                 author 

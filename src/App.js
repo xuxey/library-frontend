@@ -11,6 +11,7 @@ import RegisterForm from "./components/login/RegisterForm";
 import BookView from "./components/books/BookView";
 import {Container} from "react-bootstrap";
 import UserDashboard from "./components/UserDashboard";
+import Wishlist from "./components/books/Wishlist";
 
 const App = () => {
     const [message, setMessage] = useState(null)
@@ -67,6 +68,11 @@ const App = () => {
                     <h2>Log Out</h2>
                     <hr/>
                     <Logout setUser={setUser} showMessage={showMessage}/>
+                </Route>
+                <Route path="/wishlist">
+                    <h2>Wishlist</h2>
+                    <hr/>
+                    <Wishlist/>
                 </Route>
                 {/*<Route path="/recommended">
                     <h2>Recommended</h2>

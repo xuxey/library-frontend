@@ -4,9 +4,13 @@ import {useMutation, useQuery} from "@apollo/client";
 import {ALL_BOOKS, BOOK_BY_ID, SELF_USER} from "../../queries";
 import axios from "axios"
 import {Button, ButtonGroup, Col, Image, Row} from "react-bootstrap";
-import {DELETE_BOOK, RESERVE_BOOK, SET_AVAILABLE} from "../../mutations";
+import {DELETE_BOOK, RESERVE_BOOK, SET_AVAILABLE, TOGGLE_WISHLIST} from "../../mutations";
 
 const BookView = ({user, showMessage}) => {
+    const onError = error => {
+        console.log(error)
+        showMessage(error.graphQLErrors[0].message, true)
+    }
     const {id} = useParams()
     const {loading, data, error} = useQuery(BOOK_BY_ID, {variables:{id}})
     const [description, setDescription] = useState('')
@@ -14,30 +18,30 @@ const BookView = ({user, showMessage}) => {
     const [confirmReserve, setConfirmReserve] = useState(false)
     const [deleteBookById] = useMutation(DELETE_BOOK, {
         refetchQueries: [{query: ALL_BOOKS}],
-        onError: error => {
-            console.log(error)
-            showMessage(error.graphQLErrors[0].message, true)
-        }
+        onError
     })
     const [reserveBook] = useMutation(RESERVE_BOOK, {
         refetchQueries: [{query: ALL_BOOKS},{query: SELF_USER}],
-        onError: error => {
-            console.log(error)
-            showMessage(error.graphQLErrors[0].message, true)
-        }
+        onError
     })
     const [setBookAvailable] = useMutation(SET_AVAILABLE, {
         refetchQueries: [{query: ALL_BOOKS}],
-        onError: error => {
-            console.log(error)
-            showMessage(error.graphQLErrors[0].message, true)
-        }
+        onError
+    })
+    const [toggleWishlist] = useMutation(TOGGLE_WISHLIST, {
+        refetchQueries: [{query: SELF_USER}],
+        onError
     })
     const history = useHistory()
-    const wishlistClick = () => {
-        if(!user)
+    const wishlistClick = async () => {
+        if (!user)
             history.push('/login')
-        showMessage('Wishlist is currently unavailable', true)
+        const result = await toggleWishlist({variables: {id}})
+        if (result.data.toggleBookWishlist) {
+            showMessage(`Wishlist: ${result.data.toggleBookWishlist} ${book.title}`)
+        } else {
+            showMessage(`An error has occured`, true)
+        }
     }
 
     const reserveClick = async () => {
@@ -124,8 +128,10 @@ const BookView = ({user, showMessage}) => {
                 </Col>
                 <Col>
                     <p className="text-break">{description}</p>
+                    <sub style={{color:"#AAA"}}>The above excerpt is powered by Google Books API</sub>
                 </Col>
             </Row>
+
         </div>
     )
 }

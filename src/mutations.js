@@ -69,6 +69,11 @@ export const SET_AVAILABLE = gql`
         }
     }
 `
+export const TOGGLE_WISHLIST = gql`
+    mutation wishlist($id: String!) {
+        toggleBookWishlist(id: $id)
+    }
+`
 /*export const UPDATE_USER = gql`
     mutation updateUser(
         $apartmentWing: String!

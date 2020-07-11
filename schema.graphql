@@ -40,6 +40,7 @@ type Mutation {
   ): String
   reserveBook(id: String!): Book
   setAvailable(id: String!): Book
+  toggleBookWishlist(id: String!): String
 }
 
 type Query {

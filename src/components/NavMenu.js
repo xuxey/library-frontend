@@ -20,6 +20,7 @@ const NavMenu = ({user}) => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="#" as="span"><Link style={navStyle} to="/books">Home</Link></Nav.Link>
+                        <Nav.Link href="#" as="span"><Link style={navStyle} to="/wishlist">Wishlist</Link></Nav.Link>
                         {/*<Nav.Link href="#" as="span"><Link style={navStyle}
                                                            to='/recommended'>Recommended</Link></Nav.Link>*/}
                         <Nav.Link href="#" as="span"><Link style={navStyle} to="/dashboard">Dashboard</Link></Nav.Link>
@@ -31,13 +32,10 @@ const NavMenu = ({user}) => {
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
-                    {   user&& <>
-                        <Navbar.Text>
-                            Signed in as: <a href="/dashboard">{user.username}</a>
-                        </Navbar.Text>
-                        <Nav.Link href="#" as="span" ><Link style={navStyle} to='/logout'>Logout</Link></Nav.Link>
-                    </>
-                    }
+                    <Navbar.Text>
+                        Signed in as {user.username}
+                    </Navbar.Text>
+                    <Nav.Link href="#" as="span" ><Link style={navStyle} to='/logout'>Logout</Link></Nav.Link>
                 </Navbar.Collapse>
             </Navbar>
         )
