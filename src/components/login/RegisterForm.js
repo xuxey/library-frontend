@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import {useMutation} from "@apollo/client";
 import {REGISTER_USER} from "../../mutations";
-import Form from "react-bootstrap/Form";
-import {Button, Col, InputGroup} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Button} from "react-bootstrap";
 
 const RegisterForm = ({setUser, setMessage}) => {
     const [registerUser] = useMutation(REGISTER_USER, {
@@ -16,53 +16,110 @@ const RegisterForm = ({setUser, setMessage}) => {
         }
     })
     const history = useHistory();
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [wing, setWing] = useState('Select')
-    const [flatNumber, setFlatNumber] = useState('')
-    const [phone, setPhone] = useState('')
     const wingOptions = ['Select','A','B','C','D','E','F','N/A']
-    const onSubmit = async (event) => {
-        event.preventDefault()
-        if(wing==='Select') {
-            setMessage('Select your apartment wing', true)
-            return
-        }
-        if(phone==='' || flatNumber==='' ) {
-            setMessage('Fill out the missing fields', true)
-            return
-        }
-        if(username.length<3 || password.length <5) {
-            setMessage('You need a longer username/password', true)
-            return
-        }
-        let loggedInUser = await registerUser({variables: {
-                username,
-                password,
-                apartmentWing: wing,
-                apartmentNumber: Number(flatNumber),
-                phoneNumber: phone
-            }
-        })
-        //console.log("REGISTER_DATA", data)
-        console.log("Logged in User",loggedInUser)
-        if(!loggedInUser) {
-            console.log('received undefined response from server')
-            return
-        }
-        loggedInUser = loggedInUser.data.register
-        setUser(loggedInUser)
-        window.localStorage.setItem('libraryUser', JSON.stringify(loggedInUser))
-        setMessage(`Logged in as ${username}`, false)
-        setPhone('')
-        setFlatNumber('')
-        setWing('')
-        setPassword('')
-        setUsername('')
-        history.push('/books')
-    }
     return (
-        <Form onSubmit={onSubmit}>
+        <Formik
+            initialValues={{
+                username: '',
+                password: '',
+                apartmentWing: wingOptions[0],
+                apartmentNumber: '',
+                phoneNumber: ''
+            }}
+            validate={values => {
+                const errors = {}
+                console.log("VALUES", values)
+                if (!values.username)
+                    errors.username = 'Required';
+                else if(values.username.length<3)
+                    errors.username = 'You need a longer username'
+                if (!values.password)
+                    errors.password = 'Required'
+                else if(values.password.length<6)
+                    errors.password = 'You need a longer password'
+                if (values.apartmentWing==='Select')
+                    errors.apartmentWing = 'Required'
+                if (!values.apartmentNumber)
+                    errors.apartmentNumber = 'Required'
+                else if (Number(values.apartmentNumber<1000) || Number(values.apartmentNumber>9999))
+                    errors.apartmentNumber = 'Apartment Number must be a 4 digit number'
+                if (!values.phoneNumber)
+                    errors.phoneNumber = 'Required'
+                return errors;
+            }}
+            onSubmit={async (values, {setSubmitting}) => {
+                const user = {...values}
+                console.log("USER", user)
+                let loggedInUser = await registerUser({variables: {
+                        ...values,
+                        apartmentNumber: Number(values.apartmentNumber),
+                        phoneNumber: String(values.phoneNumber)
+                    }
+                })
+                if(!loggedInUser || !loggedInUser.data.register) {
+                    setMessage('This username is taken', true)
+                    return
+                }
+                loggedInUser = loggedInUser.data.register
+                setUser(loggedInUser)
+                window.localStorage.setItem('libraryUser', JSON.stringify(loggedInUser))
+                setMessage(`Logged in as ${values.username}`, false)
+                history.push('/books')
+                setSubmitting(false)
+            }}
+        >
+            <Form>
+                <div className={"row"}>
+                    <div className={"form-group col"}>
+                        <div className="form-label">Username</div>
+                        <Field type="text" name="username" className="form-control"/>
+                        <ErrorMessage name="username" component="div" style={{color: "#ff0000"}} />
+                    </div>
+                    <div className={"form-group col"}>
+                        <div className="form-label">Password</div>
+                        <Field type="password" name="password" className="form-control"/>
+                        <ErrorMessage name="password" component="div" style={{color: "#ff0000"}}/>
+                    </div>
+                </div>
+                <div className={"row"}>
+                    <div className={"input-group col lg"}>
+                        <div className="input-group-prepend input-group-text">Apartment</div>
+                        <div className="input-group-prepend">
+                            <Field name="apartmentWing" component="select" placeholder="Select" id="apartmentWing">
+                                {wingOptions.map(wing => <option value={wing} key={wing}>{wing}</option>)}
+                            </Field>
+                        </div>
+                        <Field type="number" name="apartmentNumber" className="form-control"/>
+                    </div>
+                    <div className={"input-group col lg"}>
+                        <div className="input-group-prepend input-group-text">Phone</div>
+                        <div className="input-group-prepend"><span className="input-group-text">+91</span></div>
+                        <Field type="number" name="phoneNumber" className="form-control"/>
+                    </div>
+                </div>
+                <div className={"row"}>
+                    <div className={"col lg"}>
+                        <ErrorMessage name="apartmentWing" component="div" style={{color: "#ff0000"}}/>
+                        <ErrorMessage name="apartmentNumber" component="div" style={{color: "#ff0000"}}/>
+                    </div>
+                    <div className={"col lg"}>
+                        <ErrorMessage name="phoneNumber" component="div" style={{color: "#ff0000"}}/>
+                    </div>
+                </div>
+                <div className={"row"} style={{paddingTop: 10}}>
+                    <div className="col">
+                        <Button variant="primary" id="register-button" type="submit">Register</Button>
+                    </div>
+                </div>
+            </Form>
+        </Formik>
+    )
+}
+
+export default RegisterForm
+
+/*
+* <Form onSubmit={onSubmit}>
             <Form.Row>
                 <Form.Group as={Col} lg={true}>
                 <Form.Label>Username</Form.Label>
@@ -107,7 +164,4 @@ const RegisterForm = ({setUser, setMessage}) => {
                 </Col>
             </Form.Row>
         </Form>
-    )
-}
-
-export default RegisterForm
+* */

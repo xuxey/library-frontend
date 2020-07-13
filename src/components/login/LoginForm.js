@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useMutation} from "@apollo/client";
 import {LOGIN_USER} from "../../mutations";
-import {Button, Col} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 import {ErrorMessage, Field, Form, Formik} from "formik";
 
