@@ -4,7 +4,9 @@ import {ALL_BOOKS} from "../../queries";
 import {Form, InputGroup, Table, Badge} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 const Books = () => {
-    const {loading, error, data} = useQuery(ALL_BOOKS)
+    const {loading, error, data} = useQuery(ALL_BOOKS, {
+        pollInterval: 5000,
+    })
     const [search, setSearch] = useState('')
     const [genreFilter, setGenreFilter] = useState('Any Genre')
     const history = useHistory()

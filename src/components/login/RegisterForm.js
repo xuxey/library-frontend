@@ -28,7 +28,6 @@ const RegisterForm = ({setUser, setMessage}) => {
             }}
             validate={values => {
                 const errors = {}
-                console.log("VALUES", values)
                 if (!values.username)
                     errors.username = 'Required';
                 else if(values.username.length<3)
@@ -49,7 +48,6 @@ const RegisterForm = ({setUser, setMessage}) => {
             }}
             onSubmit={async (values, {setSubmitting}) => {
                 const user = {...values}
-                console.log("USER", user)
                 let loggedInUser = await registerUser({variables: {
                         ...values,
                         apartmentNumber: Number(values.apartmentNumber),

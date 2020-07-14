@@ -25,8 +25,10 @@ const NavMenu = ({user}) => {
                                                            to='/recommended'>Recommended</Link></Nav.Link>*/}
                         <Nav.Link href="#" as="span"><Link style={navStyle} to="/dashboard">Dashboard</Link></Nav.Link>
                         {
-                            (user.username==='admin') ?
-                            <Nav.Link href="#" as="span"><Link style={navStyle} to="/books/new">Add Book</Link></Nav.Link> :
+                            (user.username==='admin') ? <>
+                            <Nav.Link href="#" as="span"><Link style={navStyle} to="/books/new">Add Book</Link></Nav.Link>
+                            <Nav.Link href="#" as="span"><Link style={navStyle} to="/activity">Activity</Link></Nav.Link>
+                            </>:
                             null
                         }
                     </Nav>

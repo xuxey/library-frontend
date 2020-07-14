@@ -12,7 +12,9 @@ const BookView = ({user, showMessage}) => {
         showMessage(error.graphQLErrors[0].message, true)
     }
     const {id} = useParams()
-    const {loading, data, error} = useQuery(BOOK_BY_ID, {variables:{id}})
+    const {loading, data, error} = useQuery(BOOK_BY_ID, {variables:{id},
+        pollInterval: 2000,
+    })
     const [description, setDescription] = useState('')
     const [thumbnail, setThumbnail] = useState('')
     const [confirmReserve, setConfirmReserve] = useState(false)

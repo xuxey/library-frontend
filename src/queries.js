@@ -68,3 +68,19 @@ export const SELF_USER = gql`
         }
     }
 `
+
+export const GET_LOGS = gql`
+    query {
+        allLogs{
+            book {
+                title
+            }
+            user {
+                username
+            }
+            time
+            type
+            _id
+        }
+    }
+`

@@ -12,6 +12,7 @@ import BookView from "./components/books/BookView";
 import {Container} from "react-bootstrap";
 import UserDashboard from "./components/UserDashboard";
 import Wishlist from "./components/books/Wishlist";
+import Activity from "./components/books/Activity";
 
 const App = () => {
     const [message, setMessage] = useState(null)
@@ -42,9 +43,14 @@ const App = () => {
                     }
                 </Route>
                 <Route path="/books/new">
-                    <h2>Add New Book</h2>
-                    <hr/>
-                    <NewBook showMessage={showMessage} user={user}/>
+                    {   user&&user.username==='admin' ?
+                        <>
+                            <h2>Add New Book</h2>
+                            <hr/>
+                            <NewBook showMessage={showMessage} user={user}/>
+                        </> :
+                        <Redirect to="/books"/>
+                    }
                 </Route>
                 <Route path="/books/:id">
                     <BookView user={user} showMessage={showMessage}/>
@@ -68,6 +74,16 @@ const App = () => {
                     <h2>Log Out</h2>
                     <hr/>
                     <Logout setUser={setUser} showMessage={showMessage}/>
+                </Route>
+                <Route path="/activity">
+                    {   user&&user.username==='admin' ?
+                        <>
+                            <h2>Activity</h2>
+                            <hr/>
+                            <Activity/>
+                </> :
+                <Redirect to="/books"/>
+                }
                 </Route>
                 <Route path="/wishlist">
                     <h2>Wishlist</h2>
