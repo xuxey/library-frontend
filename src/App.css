@@ -22,7 +22,11 @@ hr {
     border: 0;
     border-top: 1px solid rgb(33 150 243);
 }
-
+.footer {
+    position: fixed;
+    left: 23px;
+    bottom: 0;
+}
 /*.form-control, .form-control:focus {
     background-color: #333333;
     color: #ffffff

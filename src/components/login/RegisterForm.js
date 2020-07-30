@@ -3,9 +3,12 @@ import {useMutation} from "@apollo/client";
 import {REGISTER_USER} from "../../mutations";
 import {useHistory} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {Button} from "react-bootstrap";
+import {Button, Col, InputGroup, Row} from "react-bootstrap";
 
 const RegisterForm = ({setUser, setMessage}) => {
+    const topPaddingStyle = {
+        paddingTop: "10px"
+    }
     const [registerUser] = useMutation(REGISTER_USER, {
         onError: error => {
             console.log("Error Message",error.message)
@@ -47,7 +50,6 @@ const RegisterForm = ({setUser, setMessage}) => {
                 return errors;
             }}
             onSubmit={async (values, {setSubmitting}) => {
-                const user = {...values}
                 let loggedInUser = await registerUser({variables: {
                         ...values,
                         apartmentNumber: Number(values.apartmentNumber),
@@ -67,7 +69,7 @@ const RegisterForm = ({setUser, setMessage}) => {
             }}
         >
             <Form>
-                <div className={"row"}>
+                <Row>
                     <div className={"form-group col"}>
                         <div className="form-label">Username</div>
                         <Field type="text" name="username" className="form-control"/>
@@ -78,23 +80,27 @@ const RegisterForm = ({setUser, setMessage}) => {
                         <Field type="password" name="password" className="form-control"/>
                         <ErrorMessage name="password" component="div" style={{color: "#ff0000"}}/>
                     </div>
-                </div>
-                <div className={"row"}>
-                    <div className={"input-group col lg"}>
-                        <div className="input-group-prepend input-group-text">Apartment</div>
-                        <div className="input-group-prepend">
-                            <Field name="apartmentWing" component="select" placeholder="Select" id="apartmentWing">
-                                {wingOptions.map(wing => <option value={wing} key={wing}>{wing}</option>)}
-                            </Field>
-                        </div>
-                        <Field type="number" name="apartmentNumber" className="form-control"/>
-                    </div>
-                    <div className={"input-group col lg"}>
-                        <div className="input-group-prepend input-group-text">Phone</div>
-                        <div className="input-group-prepend"><span className="input-group-text">+91</span></div>
-                        <Field type="number" name="phoneNumber" className="form-control"/>
-                    </div>
-                </div>
+                </Row>
+                <Row>
+                    <Col lg={6}>
+                        <InputGroup className={"lg"} style={topPaddingStyle}>
+                            <div className="input-group-prepend input-group-text">Apartment</div>
+                            <div className="input-group-prepend">
+                                <Field name="apartmentWing" component="select" placeholder="Select" id="apartmentWing">
+                                    {wingOptions.map(wing => <option value={wing} key={wing}>{wing}</option>)}
+                                </Field>
+                            </div>
+                            <Field type="number" name="apartmentNumber" className="form-control"/>
+                        </InputGroup>
+                    </Col>
+                    <Col lg={6}>
+                        <InputGroup className={"lg"} style={topPaddingStyle}>
+                            <div className="input-group-prepend input-group-text">Phone</div>
+                            <div className="input-group-prepend"><span className="input-group-text">+91</span></div>
+                            <Field type="number" name="phoneNumber" className="form-control"/>
+                        </InputGroup>
+                    </Col>
+                </Row>
                 <div className={"row"}>
                     <div className={"col lg"}>
                         <ErrorMessage name="apartmentWing" component="div" style={{color: "#ff0000"}}/>

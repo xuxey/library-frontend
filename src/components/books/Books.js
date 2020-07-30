@@ -3,6 +3,8 @@ import {useQuery} from "@apollo/client";
 import {ALL_BOOKS} from "../../queries";
 import {Form, InputGroup, Table, Badge} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
+import Footer from "../Footer";
+
 const Books = () => {
     const {loading, error, data} = useQuery(ALL_BOOKS, {
         pollInterval: 5000,
@@ -46,7 +48,7 @@ const Books = () => {
                     {genres.map(genre => <option key={genre}>{genre}</option>)}
                 </Form.Control>
             </InputGroup>
-            <hr/>
+            <br/>
             <Table striped hover variant="dark">
                 <tbody>
                 <tr>
@@ -71,6 +73,7 @@ const Books = () => {
                 )}
                 </tbody>
             </Table>
+            <Footer/>
       </div>
   )
 }

@@ -5,6 +5,7 @@ import {ALL_BOOKS, BOOK_BY_ID, SELF_USER} from "../../queries";
 import axios from "axios"
 import {Button, ButtonGroup, Col, Image, Row} from "react-bootstrap";
 import {DELETE_BOOK, RESERVE_BOOK, SET_AVAILABLE, TOGGLE_WISHLIST} from "../../mutations";
+import Footer from "../Footer";
 
 const BookView = ({user, showMessage}) => {
     const onError = error => {
@@ -60,7 +61,7 @@ const BookView = ({user, showMessage}) => {
         book = book.data.reserveBook
         console.log(book)
         if(book.borrower.username===user.username) {
-            showMessage(`${book.title} has been reserved for you. Pick it up within the next 12 hours!`)
+            showMessage(`${book.title} has been reserved for you. Pick it up at D 1206 between 4 and 7 PM in 24 hours!`)
         }
     }
     const markAvailable = async () => {
@@ -101,7 +102,7 @@ const BookView = ({user, showMessage}) => {
     }
     const book = data.bookById
     return (
-        <div>
+        <>
             <Row>
                 <Col>
                     <h3>{book.title} by {book.author}</h3>
@@ -130,11 +131,15 @@ const BookView = ({user, showMessage}) => {
                 </Col>
                 <Col>
                     <p className="text-break">{description}</p>
-                    <sub style={{color:"#AAA"}}>The above excerpt is powered by Google Books API</sub>
+                    <sub style={{color:"#AAA"}}>
+                        The above automated excerpt is powered by the Google Books API.
+                        <br/>
+                        Actual book may vary from the pictorial representation and description.
+                    </sub>
                 </Col>
             </Row>
-
-        </div>
+            <Footer/>
+        </>
     )
 }
 
