@@ -27,6 +27,7 @@ const NavMenu = ({user}) => {
                         {
                             (user.username==='admin') ? <>
                             <Nav.Link href="#" as="span"><Link style={navStyle} to="/books/new">Add Book</Link></Nav.Link>
+                            <Nav.Link href="#" as="span"><Link style={navStyle} to="/users">Users</Link></Nav.Link>
                             <Nav.Link href="#" as="span"><Link style={navStyle} to="/activity">Activity</Link></Nav.Link>
                             </>:
                             null

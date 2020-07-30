@@ -41,7 +41,7 @@ hr {
     font-weight: 400;
     line-height: 1.5;
     color: #ffffff;
-    background-color: #333333;
+    background-color: transparent;
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
@@ -50,7 +50,7 @@ hr {
 
 .form-control:focus {
     color: #ffffff;
-    background-color: #333333;
+    background-color: transparent;
     border-color: #80bdff;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
@@ -74,10 +74,14 @@ hr {
     appearance: none;
 }
 .form-control:disabled, .form-control[readonly] {
-    background-color: #333333;
+    background-color: transparent;
     opacity: 0.5;
 }
 
 h2 {
     font-family: 'Source Code Pro', monospace;
+}
+
+.modal-content {
+    background-color: #323232;
 }

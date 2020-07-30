@@ -84,3 +84,21 @@ export const GET_LOGS = gql`
         }
     }
 `
+
+export const ALL_USERS = gql`
+    query {
+        allUsers {
+            id
+            username
+            apartmentNumber
+            apartmentWing
+            wishlist {
+                title
+            }
+            phoneNumber
+            borrowedBooks{
+                title
+            }
+        }
+    }
+`

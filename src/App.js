@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Books from './components/books/Books'
-import NewBook from './components/books/NewBook'
+import NewBook from './components/admin/NewBook'
 import Notification from "./components/Notification";
 import LoginForm from "./components/login/LoginForm";
 import NavMenu from "./components/NavMenu";
@@ -12,7 +12,8 @@ import BookView from "./components/books/BookView";
 import {Container} from "react-bootstrap";
 import UserDashboard from "./components/UserDashboard";
 import Wishlist from "./components/books/Wishlist";
-import Activity from "./components/books/Activity";
+import Activity from "./components/admin/Activity";
+import Users from "./components/admin/Users";
 
 const App = () => {
     const [message, setMessage] = useState(null)
@@ -59,6 +60,16 @@ const App = () => {
                     <h2>Catalog</h2>
                     <hr/>
                     <Books/>
+                </Route>
+                <Route path="/users">
+                    {   user&&user.username==='admin' ?
+                        <>
+                            <h2>Users</h2>
+                            <hr/>
+                            <Users/>
+                        </> :
+                        <Redirect to="/books"/>
+                    }
                 </Route>
                 <Route path="/dashboard">
                     {

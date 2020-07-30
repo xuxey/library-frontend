@@ -22,6 +22,7 @@ type Log {
   user: User
   time: String!
   type: String!
+  _id: ID!
 }
 
 type Mutation {
@@ -55,14 +56,13 @@ type Query {
   bookById(id: String): Book
   allBooks(author: String, genre: String): [Book!]!
   allLogs(userId: String): [Log!]!
+  allUsers: [User!]!
   me: User!
 }
 
 type Subscription {
   bookAdded: Book!
 }
-
-scalar Upload
 
 type User {
   phoneNumber: String!

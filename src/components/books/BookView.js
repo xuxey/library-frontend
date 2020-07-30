@@ -3,7 +3,7 @@ import {useParams, useHistory} from "react-router-dom"
 import {useMutation, useQuery} from "@apollo/client";
 import {ALL_BOOKS, BOOK_BY_ID, SELF_USER} from "../../queries";
 import axios from "axios"
-import {Button, ButtonGroup, Col, Image, Row} from "react-bootstrap";
+import { Badge, Button, ButtonGroup, Col, Image, Row} from "react-bootstrap";
 import {DELETE_BOOK, RESERVE_BOOK, SET_AVAILABLE, TOGGLE_WISHLIST} from "../../mutations";
 import Footer from "../Footer";
 
@@ -61,7 +61,7 @@ const BookView = ({user, showMessage}) => {
         book = book.data.reserveBook
         console.log(book)
         if(book.borrower.username===user.username) {
-            showMessage(`${book.title} has been reserved for you. Pick it up at D 1206 between 4 and 7 PM in 24 hours!`)
+            showMessage(`${book.title} has been reserved for you. Pick it up at D 1206 between 6 and 9 PM in 24 hours!`)
         }
     }
     const markAvailable = async () => {
@@ -105,7 +105,9 @@ const BookView = ({user, showMessage}) => {
         <>
             <Row>
                 <Col>
-                    <h3>{book.title} by {book.author}</h3>
+                    <h3>
+                        {book.title} by {book.author} {book.borrower && user.username==='admin' ? <Badge variant={'secondary'}>Reserved by {book.borrower.username}</Badge> : null}
+                    </h3>
                 </Col>
                 <Col>
                     <ButtonGroup className="float-right">

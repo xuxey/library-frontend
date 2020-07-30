@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useQuery} from "@apollo/client";
 import {ALL_BOOKS} from "../../queries";
-import {Form, InputGroup, Table, Badge} from "react-bootstrap";
+import {Form, InputGroup, Table, Badge, Row, Col} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 import Footer from "../Footer";
 
@@ -30,27 +30,32 @@ const Books = () => {
     let i = 1
     return (
         <div>
-            <InputGroup>
-                <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control placeholder="by Title or Author" value={search} onChange={e => {
-                    e.preventDefault();
-                    setSearch(e.target.value)
-                }}/>
-                <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">Filter</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control as="select" custom onChange={e => {
-                    e.preventDefault();
-                    setGenreFilter(e.target.value)
-                }}>
-                    {genres.map(genre => <option key={genre}>{genre}</option>)}
-                </Form.Control>
-            </InputGroup>
+            <Row>
+                <InputGroup as={Col}>
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <Form.Control placeholder="by Title or Author" value={search} onChange={e => {
+                        e.preventDefault();
+                        setSearch(e.target.value)
+                    }}/>
+                </InputGroup>
+                <InputGroup as={Col}>
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="basic-addon1">Filter</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <Form.Control as="select" custom onChange={e => {
+                        e.preventDefault();
+                        setGenreFilter(e.target.value)
+                    }}>
+                        {genres.map(genre => <option key={genre}>{genre}</option>)}
+                    </Form.Control>
+                </InputGroup>
+            </Row>
+
             <br/>
             <Table striped hover variant="dark">
-                <tbody>
+                <thead>
                 <tr>
                     <th>#</th>
                     <th>Book</th>
@@ -58,9 +63,11 @@ const Books = () => {
                     <th>Genres</th>
                     <th>Available</th>
                 </tr>
+                </thead>
+                <tbody>
                 {books.map(book =>
                     <tr key={book.title} onClick={()=>history.push(`/books/${book._id}`)}>
-                        <td>{i++}</td>
+                        <th>{i++}</th>
                         <td>{book.title}</td>
                         <td>{book.author}</td>
                         <td>{book.genres.join(', ')}</td>
