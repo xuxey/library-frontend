@@ -56,7 +56,7 @@ const App = () => {
                     <BookView user={user} showMessage={showMessage}/>
                 </Route>
                 <Route path="/books">
-                    <h2>Books</h2>
+                    <h2>Catalog</h2>
                     <hr/>
                     <Books/>
                 </Route>

@@ -17,7 +17,10 @@ html, body {
     }
 }
 hr {
-    background-color: #555;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgb(33 150 243);
 }
 
 /*.form-control, .form-control:focus {
@@ -69,4 +72,8 @@ hr {
 .form-control:disabled, .form-control[readonly] {
     background-color: #333333;
     opacity: 0.5;
+}
+
+h2 {
+    font-family: 'Source Code Pro', monospace;
 }
