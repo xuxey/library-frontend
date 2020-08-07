@@ -4,7 +4,7 @@ Frontend for a library (book sharing application) using React.js and GraphQL (Ap
 
 ## Deployment
 
-https://library-frontend.vercel.app/books
+https://sharebooks.vercel.app
 
 ## Installation
 
