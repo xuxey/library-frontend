@@ -102,3 +102,9 @@ export const ALL_USERS = gql`
         }
     }
 `
+export const NAME_EXISTS = gql`
+    query ($name: String!) {
+        nameExists(name: $name)
+    }
+`
+

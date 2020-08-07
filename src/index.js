@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache, ApolloLink} from '@apollo/client'
+import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/client'
 import {BrowserRouter as Router,} from "react-router-dom"
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
+
 require('dotenv').config()
 
 const httpLink = new HttpLink({uri: process.env.REACT_APP_API_LINK})
@@ -23,11 +25,12 @@ const client = new ApolloClient({
     connectToDevTools: true,
     link: authLink.concat(httpLink),
 })
-
 ReactDOM.render(
     <ApolloProvider client={client}>
         <Router>
-            <App/>
+            <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_CAPTCHA_SITE_KEY}>
+                <App/>
+            </GoogleReCaptchaProvider>
         </Router>
     </ApolloProvider>,
     document.getElementById('root')

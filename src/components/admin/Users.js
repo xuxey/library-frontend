@@ -3,6 +3,7 @@ import {ALL_USERS} from "../../queries";
 import {useQuery} from "@apollo/client";
 import {Button, Modal, Table} from "react-bootstrap";
 import "../../App.css"
+
 const Users = () => {
     const {loading, error, data} = useQuery(ALL_USERS, {pollInterval: 5000})
     const [selected, setSelected] = useState()
@@ -37,16 +38,19 @@ const Users = () => {
                             <tr key={user.id}>
                                 <th>{i++}</th>
                                 <td>{user.username}</td>
-                                <td>{user.apartmentWing+" "+user.apartmentNumber}</td>
+                                <td>{user.apartmentWing + " " + user.apartmentNumber}</td>
                                 <td>{user.phoneNumber}</td>
-                                <td><Button size={"sm"} variant={"primary"} onClick={() => {
-                                    setSelected(user.borrowedBooks)
-                                    handleShow()
-                                }}>Show Borrowed</Button></td>
-                                <td><Button size={"sm"} variant={"info"} onClick={() => {
+                                <td>{user.borrowedBooks.length > 0 ?
+                                    <Button size={"sm"} variant={"primary"} onClick={() => {
+                                        setSelected(user.borrowedBooks)
+                                        handleShow()
+                                    }}>Show Borrowed</Button> :
+                                    'No items'}
+                                </td>
+                                <td>{user.wishlist.length > 0 ? <Button size={"sm"} variant={"info"} onClick={() => {
                                     setSelected(user.wishlist)
                                     handleShow()
-                                }}>Show Wishlist</Button></td>
+                                }}>Show Wishlist</Button> : 'No items'}</td>
                             </tr>
                         )
                     }

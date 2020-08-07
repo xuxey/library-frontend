@@ -25,7 +25,6 @@ const LoginForm = ({setUser, setMessage}) => {
             }}
             onSubmit={async (values, {setSubmitting}) => {
                 const user = {...values}
-                console.log("USER", user)
                 let loggedInUser = await loginUser({variables: user})
                 if (!loggedInUser || !loggedInUser.data || !loggedInUser.data.login) {
                     setMessage('Username or password is incorrect', true)

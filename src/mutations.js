@@ -74,6 +74,19 @@ export const TOGGLE_WISHLIST = gql`
         toggleBookWishlist(id: $id)
     }
 `
+
+export const SEND_SMS = gql`
+    mutation sendSMS($phone:String!) {
+        sendSMS(phone: $phone)
+    }
+`
+
+export const VERIFY_SMS = gql`
+    mutation verify($phone:String!, $code: Int!) {
+        verifySMS(phone: $phone, code:$code)
+    }
+`
+
 /*export const UPDATE_USER = gql`
     mutation updateUser(
         $apartmentWing: String!

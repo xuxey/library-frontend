@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {useMutation, useQuery} from "@apollo/client";
+import {useQuery} from "@apollo/client";
 import {SELF_USER} from "../queries";
 import Form from "react-bootstrap/Form";
 import {Button, Col, InputGroup} from "react-bootstrap";
-import {UPDATE_USER} from "../mutations";
 
 const UserDashboard = () => {
     const {loading, data, error} = useQuery(SELF_USER)
@@ -23,7 +22,7 @@ const UserDashboard = () => {
         event.preventDefault()
         if (wing === 'Select') {
             //setMessage('Select your apartment wing', true)
-            return
+
         }
         /*let updated = await updateUser({
             variables: {
@@ -53,8 +52,8 @@ const UserDashboard = () => {
                 }
             </ol>
             <hr/>
-            <h4>My info</h4>
-            <Form onSubmit={onSubmit}>
+            {/*<h4>My info</h4>*/}
+            <Form onSubmit={onSubmit} style={{display: "none"}}>
                 <Form.Row>
                     <InputGroup as={Col} lg={true}>
                         <InputGroup.Prepend>

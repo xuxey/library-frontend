@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {useParams, useHistory} from "react-router-dom"
-import {useMutation, useQuery} from "@apollo/client";
+import {useHistory, useParams} from "react-router-dom"
+import {useLazyQuery, useMutation, useQuery} from "@apollo/client";
 import {ALL_BOOKS, BOOK_BY_ID, SELF_USER} from "../../queries";
 import axios from "axios"
-import { Badge, Button, ButtonGroup, Col, Image, Row} from "react-bootstrap";
+import {Badge, Button, ButtonGroup, Col, Image, Row} from "react-bootstrap";
 import {DELETE_BOOK, RESERVE_BOOK, SET_AVAILABLE, TOGGLE_WISHLIST} from "../../mutations";
 import Footer from "../Footer";
 
 const BookView = ({user, showMessage}) => {
+    const [getMe, response] = useLazyQuery(SELF_USER, {pollInterval: 2000})
     const onError = error => {
         console.log(error)
         showMessage(error.graphQLErrors[0].message, true)
@@ -28,7 +29,7 @@ const BookView = ({user, showMessage}) => {
         onError
     })
     const [setBookAvailable] = useMutation(SET_AVAILABLE, {
-        refetchQueries: [{query: ALL_BOOKS}],
+        refetchQueries: [{query: ALL_BOOKS}, {query: BOOK_BY_ID}],
         onError
     })
     const [toggleWishlist] = useMutation(TOGGLE_WISHLIST, {
@@ -52,15 +53,22 @@ const BookView = ({user, showMessage}) => {
             history.push('/login')
             return
         }
-        if(!confirmReserve) {
+        await getMe()
+        if (response.data)
+            user = response.data.me
+        console.log('user ', user)
+        if (user.borrowedBooks && user.borrowedBooks.length > 1) {
+            showMessage('You have reached your limit for reservations', true)
+            return
+        }
+        if (!confirmReserve) {
             setConfirmReserve(true)
             showMessage('Click confirm to reserve this book. Action may not be reversed')
             return
         }
         let book = await reserveBook({variables: {id}})
         book = book.data.reserveBook
-        console.log(book)
-        if(book.borrower.username===user.username) {
+        if (book.borrower.username === user.username) {
             showMessage(`${book.title} has been reserved for you. Pick it up at D 1206 between 6 and 9 PM in 24 hours!`)
         }
     }
@@ -100,26 +108,29 @@ const BookView = ({user, showMessage}) => {
         console.log(error)
         return <div>An Error has occured</div>
     }
+    console.log(user)
     const book = data.bookById
     return (
         <>
             <Row>
                 <Col>
                     <h3>
-                        {book.title} by {book.author} {book.borrower && user.username==='admin' ? <Badge variant={'secondary'}>Reserved by {book.borrower.username}</Badge> : null}
+                        {book.title} by {book.author} {book.borrower && user && user.username === 'admin' ?
+                        <Badge variant={'secondary'}>Reserved by {book.borrower.username}</Badge> : null}
                     </h3>
                 </Col>
                 <Col>
                     <ButtonGroup className="float-right">
                         <Button variant={"primary"} onClick={wishlistClick}>Wishlist</Button>
-                        {   book.borrower?(
-                            user && user.username!=='admin'?
-                            <Button variant={"secondary"} disabled>Unavailable</Button> :
-                            <Button variant={"warning"} onClick={markAvailable}>Set Available</Button> ):
-                            <Button variant={"success"} onClick={reserveClick} > {confirmReserve?'Confirm':'Reserve'} </Button>
+                        {book.borrower ?
+                            user && user.username === 'admin' ?
+                                <Button variant={"warning"} onClick={markAvailable}>Set Available</Button> :
+                                <Button variant={"secondary"} disabled>Unavailable</Button> :
+                            <Button variant={"success"}
+                                    onClick={reserveClick}> {confirmReserve ? 'Confirm' : 'Reserve'} </Button>
                         }
                         {
-                            user && user.username==='admin' &&
+                            user && user.username === 'admin' &&
                             <Button variant={"danger"} onClick={deleteBook}>Delete</Button>
                         }
                     </ButtonGroup>

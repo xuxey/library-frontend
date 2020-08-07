@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import {useQuery} from "@apollo/client";
 import {SELF_USER} from "../../queries";
-import {Form, InputGroup, Table, Badge} from "react-bootstrap";
+import {Badge, Form, InputGroup, Table} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
+
 const Wishlist = () => {
     const {loading, error, data} = useQuery(SELF_USER)
     const [search, setSearch] = useState('')
@@ -13,7 +14,6 @@ const Wishlist = () => {
         console.log(error)
         return <div>Error</div>
     }
-    console.log("DATA",data)
     if(!data) return null
     let books = data.me.wishlist
     if(books.length===0) return <div>You do not have any books on your wishlist</div>

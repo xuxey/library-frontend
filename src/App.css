@@ -85,3 +85,7 @@ h2 {
 .modal-content {
     background-color: #323232;
 }
+
+.pad-top {
+    padding-top: 10px;
+}

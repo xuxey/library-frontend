@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {ADD_BOOK} from "../../mutations";
 import {useMutation} from "@apollo/client";
 import {ALL_BOOKS} from "../../queries";
-import {Button, Form, Col, InputGroup} from "react-bootstrap";
+import {Button, Col, Form, InputGroup} from "react-bootstrap";
 
 const NewBook = (props) => {
     const [title, setTitle] = useState('')
@@ -26,7 +26,6 @@ const NewBook = (props) => {
         event.preventDefault()
         const numPrice = Number(price)
         await createBook({variables: {title, author, price: numPrice, genres}})
-        console.log('add book...')
         props.showMessage(`New book added: ${title}`)
         setTitle('')
         setPrice('')

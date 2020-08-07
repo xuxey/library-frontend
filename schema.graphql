@@ -49,6 +49,8 @@ type Mutation {
   reserveBook(id: String!): Book
   setAvailable(id: String!): Book
   toggleBookWishlist(id: String!): String
+  sendSMS(phone: String!): String
+  verifySMS(phone: String!, code: Int!): String
 }
 
 type Query {
@@ -58,11 +60,14 @@ type Query {
   allLogs(userId: String): [Log!]!
   allUsers: [User!]!
   me: User!
+  nameExists(name: String!): String!
 }
 
 type Subscription {
   bookAdded: Book!
 }
+
+scalar Upload
 
 type User {
   phoneNumber: String!
