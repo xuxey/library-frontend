@@ -17,6 +17,7 @@ const RegisterForm = ({setUser, setMessage}) => {
     const [nameExists, {data}] = useLazyQuery(NAME_EXISTS)
     const [phone, setPhone] = useState(null)
     const [codeSent, setCodeSent] = useState(false)
+    const [errors, setErrors] = useState({_unused: "value"})
     const [sendCode] = useMutation(SEND_SMS, {
         onError: error => {
             console.log("Error Message", error.message)
@@ -82,6 +83,7 @@ const RegisterForm = ({setUser, setMessage}) => {
                         errors.username = 'Username is taken'
                     if (values.otp > 9999)
                         errors.otp = 'Must be 4 digit'
+                    setErrors(errors)
                     return errors;
                 }}
                 onSubmit={async (values, {setSubmitting}) => {
@@ -162,7 +164,8 @@ const RegisterForm = ({setUser, setMessage}) => {
                     </div>
                     <div className={"row pad-top"} style={codeSent ? hideStyle : null}>
                         <div className="col">
-                            <Button variant="primary" id="register-button" onClick={sendOTP}>Verify</Button>
+                            <Button variant="primary" id="register-button" onClick={sendOTP}
+                                    disabled={!(Object.keys(errors).length === 0 && errors.constructor === Object)}>Verify</Button>
                         </div>
                     </div>
                     <div className={"row pad-top"} style={codeSent ? null : hideStyle}>
