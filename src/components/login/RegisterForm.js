@@ -4,7 +4,7 @@ import {REGISTER_USER, SEND_SMS, VERIFY_SMS} from "../../mutations";
 import {useHistory} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Button, Col, InputGroup, Row} from "react-bootstrap";
-import {NAME_EXISTS} from "../../queries";
+import {NAME_EXISTS, PHONE_LIMIT_REACHED} from "../../queries";
 import "../../App.css"
 
 const RegisterForm = ({setUser, setMessage}) => {
@@ -14,7 +14,8 @@ const RegisterForm = ({setUser, setMessage}) => {
     const hideStyle = {
         display: "none"
     }
-    const [nameExists, {data}] = useLazyQuery(NAME_EXISTS)
+    const [nameExists, nameExistsResponse] = useLazyQuery(NAME_EXISTS)
+    const [phoneLimitReached, phoneLimitResponse] = useLazyQuery(PHONE_LIMIT_REACHED)
     const [phone, setPhone] = useState(null)
     const [codeSent, setCodeSent] = useState(false)
     const [errors, setErrors] = useState({_unused: "value"})
@@ -77,9 +78,15 @@ const RegisterForm = ({setUser, setMessage}) => {
                         errors.phoneNumber = 'Phone Number Required'
                     else if (values.phoneNumber > 9999999999 || values.phoneNumber < 1000000000)
                         errors.phoneNumber = 'Phone number must be 10 digits '
-                    else setPhone('+91' + values.phoneNumber)
+                    else {
+                        await phoneLimitReached({variables: {phone: String(values.phoneNumber)}})
+                        if (phoneLimitResponse && phoneLimitResponse.data && phoneLimitResponse.data.phoneLimitReached === 'exists')
+                            errors.phoneNumber = 'Phone number has exceeded account limits'
+                        else
+                            setPhone('+91' + values.phoneNumber)
+                    }
                     await nameExists({variables: {name: values.username}})
-                    if (data && data.nameExists === 'exists')
+                    if (nameExistsResponse && nameExistsResponse.data && nameExistsResponse.data.nameExists === 'exists')
                         errors.username = 'Username is taken'
                     if (values.otp > 9999)
                         errors.otp = 'Must be 4 digit'

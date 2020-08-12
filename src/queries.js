@@ -108,3 +108,9 @@ export const NAME_EXISTS = gql`
     }
 `
 
+export const PHONE_LIMIT_REACHED = gql`
+    query checkPhone($phone:String!) {
+        phoneLimitReached(phone:$phone)
+    }
+`
+

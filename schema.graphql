@@ -61,6 +61,7 @@ type Query {
   allUsers: [User!]!
   me: User!
   nameExists(name: String!): String!
+    phoneLimitReached(phone: String!): String!
 }
 
 type Subscription {
