@@ -3,7 +3,7 @@ import {useLazyQuery, useMutation} from "@apollo/client";
 import {REGISTER_USER, SEND_SMS, VERIFY_SMS} from "../../mutations";
 import {useHistory} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {Button, Col, InputGroup, Row} from "react-bootstrap";
+import {Alert, Button, Col, InputGroup, Row} from "react-bootstrap";
 import {NAME_EXISTS, PHONE_LIMIT_REACHED} from "../../queries";
 import "../../App.css"
 
@@ -118,6 +118,7 @@ const RegisterForm = ({setUser, setMessage}) => {
                 }}
             >
                 <Form>
+                    <Alert variant={'danger'}> Creating accounts is temporarily disabled until launch</Alert>
                     <div style={codeSent ? hideStyle : null}>
                         <Row>
                             <div className={"form-group col"}>
@@ -172,7 +173,7 @@ const RegisterForm = ({setUser, setMessage}) => {
                     <div className={"row pad-top"} style={codeSent ? hideStyle : null}>
                         <div className="col">
                             <Button variant="primary" id="register-button" onClick={sendOTP}
-                                    disabled={!(Object.keys(errors).length === 0 && errors.constructor === Object)}>Verify</Button>
+                                    disabled={true/*!(Object.keys(errors).length === 0 && errors.constructor === Object)*/}>Verify</Button>
                         </div>
                     </div>
                     <div className={"row pad-top"} style={codeSent ? null : hideStyle}>

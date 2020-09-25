@@ -1,7 +1,7 @@
 import React from 'react'
 import {useMutation} from "@apollo/client";
 import {LOGIN_USER} from "../../mutations";
-import {Alert, Button} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 import {ErrorMessage, Field, Form, Formik} from "formik";
 
@@ -41,7 +41,6 @@ const LoginForm = ({setUser, setMessage}) => {
         >
             {({ isSubmitting }) => (
                 <Form>
-                    <Alert variant={'danger'}> Creating accounts is temporarily disabled until launch</Alert>
                     <div className={"row"}>
                         <div className={"form-group col"}>
                             <div className="form-label">Username</div>
@@ -54,7 +53,7 @@ const LoginForm = ({setUser, setMessage}) => {
                             <ErrorMessage name="password" component="div" style={{color: "#ff0000"}}/>
                         </div>
                     </div>
-                    <Button type="submit" disabled={true}>Submit</Button>
+                    <Button type="submit" disabled={isSubmitting}>Submit</Button>
                 </Form>
             )}
         </Formik>
