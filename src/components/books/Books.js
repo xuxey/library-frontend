@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {useQuery} from "@apollo/client";
 import {ALL_BOOKS} from "../../queries";
-import {Form, InputGroup, Table, Badge, Row, Col} from "react-bootstrap";
+import {Badge, Col, Form, InputGroup, Row, Table} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 import Footer from "../Footer";
 
-const Books = () => {
+const Books = ({user}) => {
     const {loading, error, data} = useQuery(ALL_BOOKS, {
         pollInterval: 5000,
     })
@@ -80,7 +80,7 @@ const Books = () => {
                 )}
                 </tbody>
             </Table>
-            <Footer/>
+            {user ? <Footer/> : null}
       </div>
   )
 }

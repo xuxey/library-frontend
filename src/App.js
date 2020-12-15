@@ -14,6 +14,7 @@ import UserDashboard from "./components/UserDashboard";
 import Wishlist from "./components/books/Wishlist";
 import Activity from "./components/admin/Activity";
 import Users from "./components/admin/Users";
+import HomePage from "./components/HomePage";
 
 const App = () => {
     const [message, setMessage] = useState(null)
@@ -59,7 +60,7 @@ const App = () => {
                 <Route path="/books">
                     <h2>Catalog</h2>
                     <hr/>
-                    <Books/>
+                    <Books user={user}/>
                 </Route>
                 <Route path="/users">
                     {   user&&user.username==='admin' ?
@@ -109,10 +110,13 @@ const App = () => {
                 <Route path="/register">
                     <h2>Register</h2>
                     <hr/>
-                    {user?
+                    {user ?
                         <Redirect to="/books"/> :
                         <RegisterForm setUser={setUser} setMessage={showMessage}/>
                     }
+                </Route>
+                <Route path="/home">
+                    <HomePage/>
                 </Route>
                 <Route path="/">
                     <h2>Books</h2>
