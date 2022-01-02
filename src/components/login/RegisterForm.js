@@ -173,7 +173,7 @@ const RegisterForm = ({setUser, setMessage}) => {
                     <div className={"row pad-top"} style={codeSent ? hideStyle : null}>
                         <div className="col">
                             <Button variant="primary" id="register-button" onClick={sendOTP}
-                                    disabled={true/*!(Object.keys(errors).length === 0 && errors.constructor === Object)*/}>Verify</Button>
+                                    disabled={!(Object.keys(errors).length === 0 && errors.constructor === Object)}>Verify</Button>
                         </div>
                     </div>
                     <div className={"row pad-top"} style={codeSent ? null : hideStyle}>
