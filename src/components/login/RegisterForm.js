@@ -118,7 +118,6 @@ const RegisterForm = ({setUser, setMessage}) => {
                 }}
             >
                 <Form>
-                    <Alert variant={'danger'}> Creating accounts is temporarily disabled until launch</Alert>
                     <div style={codeSent ? hideStyle : null}>
                         <Row>
                             <div className={"form-group col"}>
